@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>單字卡雙向練習｜英↔中（讀檔版）</title>
+<link rel="stylesheet" href="vocab_style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>單字卡雙向練習｜英→中 ↔ 中→英</h1>
+    <label class="toggle">自動發音 <input type="checkbox" id="autotts" checked></label>
+  </header>
+
+  <div class="wrap">
+    <!-- 左側：資料與設定 -->
+    <section class="panel">
+      <h2>資料與設定</h2>
+      <div class="row">
+        <input type="file" id="fileInput" accept="application/json,.json" />
+        <div id="fileName" class="muted" style="font-size:12px"></div>
+        <div id="err" class="err" aria-live="polite"></div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="loadBtn">載入資料並開始</button>
+        <button class="btn" id="saveDontKnowsBtn" disabled>下載本輪「不會」清單</button>
+      </div>
+      <div style="height:1px;background:linear-gradient(90deg,transparent,#31407d,transparent);margin:12px 0"></div>
+      <div class="stats">
+        <div class="stat"><div class="muted">本階段進度</div><div class="big" id="progress">0 / 0</div></div>
+        <div class="stat"><div class="muted">剩餘題數</div><div class="big" id="leftCount">0</div></div>
+        <div class="stat"><div class="muted">本輪不會</div><div class="big" id="dkCount">0</div></div>
+      </div>
+
+      <!-- 練習方向 -->
+      <div class="row" style="margin-top:10px;gap:8px">
+        <span class="muted">練習方向：</span>
+      </div>
+      <div class="row" style="margin-top:6px;gap:8px">
+        <button class="btn tab active" id="phaseForwardBtn">正向 英→中</button>
+        <button class="btn tab" id="phaseReverseBtn">反向 中→英</button>
+      </div>
+
+      <!-- 鍵盤快捷鍵 -->
+      <div class="row" style="margin-top:10px;gap:8px;flex-direction:column;align-items:flex-start">
+        <span class="muted">鍵盤快捷鍵：</span>
+        <ul style="margin:6px 0 0 18px;line-height:1.6">
+          <li><kbd>Space</kbd>：顯示解答</li>
+          <li><kbd>Enter</kbd>：下一題（代表會）</li>
+          <li><kbd>N</kbd>／<kbd>n</kbd>：不會（下一輪重練）</li>
+          <li><kbd>→</kbd>：下一題（代表會）／<kbd>←</kbd>：上一題</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 右側：練習舞台 -->
+    <section class="stage">
+      <h2 class="muted" style="margin:0">練習</h2>
+      <div class="card">
+        <div id="front" style="text-align:center">
+          <div class="word" id="word">請先載入資料</div>
+          <div class="pos" id="pos"></div>
+          <div class="ctrls">
+            <button class="btn" id="speakBtn">🔊 發音</button>
+            <button class="btn" id="showBtn">顯示解答</button>
+          </div>
+          <div id="frontHint" class="flip" style="display:none"></div>
+        </div>
+        <div id="back" class="flip" style="display:none">
+          <h3>反面內容</h3>
+          <div id="three"></div>
+          <div id="meanings"></div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="backBtn">← 上一題</button>
+        <button class="btn bad" id="dontBtn">不會</button>
+        <button class="btn ok" id="nextBtn">下一題（代表會）</button>
+      </div>
+      <div id="roundEnd" class="panel" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <h3 style="margin:0">本輪結束！以下是不會清單</h3>
+          <button class="btn" id="nextRoundBtn">開始下一輪（只練不會）</button>
+        </div>
+        <ol id="dontList" style="margin:10px 0 0 18px"></ol>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="vocab_app.js"></script>
+</body>
+</html>
